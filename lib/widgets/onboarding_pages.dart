@@ -23,7 +23,7 @@ class _WokaPageState extends State<OnboardingPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade700,
+      backgroundColor: Colors.green.shade600,
       body: Container(
         padding: const EdgeInsets.only(bottom: 20),
         child: PageView(
@@ -35,44 +35,61 @@ class _WokaPageState extends State<OnboardingPages> {
           },
           children: [
             buildPage(
-                color: Colors.green.shade200,
+                color: Colors.red.shade700,
                 urlImage: 'assets/images/capenter1.jpg',
-                title: "WOKA",
+                title: "Service",
+                logo: 'assets/images/woka_logo_white_bkgrnd.png',
                 subtitle:
-                    "Welcome to WOKA where you can find professionals who will help you with your daily requests for services"),
+                    "Welcome to WOKA where you can specify your profession and access clients who want your service."),
             buildPage(
-                color: Colors.red.shade200,
+                color: Colors.yellow.shade800,
                 urlImage: 'assets/images/cleaner_unsplash.jpeg',
-                title: "WOKA",
+                title: "Client",
+                logo: 'assets/images/woka_logo_white_bkgrnd.png',
                 subtitle:
-                    "Welcome to WOKA where you can find professionals who will help you with your daily requests for services"),
+                    "Welcome to WOKA where you can find professionals that will provide you services requested at your location"),
             buildPage(
-                color: Colors.blue.shade200,
-                urlImage: 'assets/images/plumber_unsplash.jpg',
-                title: "WOKA",
+                color: Colors.green.shade600,
+                urlImage: 'assets/images/delivery1.png',
+                title: "Welcome",
+                logo: 'assets/images/woka_logo_white_bkgrnd.png',
                 subtitle:
                     "Welcome to WOKA where you can find professionals who will help you with your daily requests for services"),
           ],
         ),
       ),
       bottomSheet: isLastPage
-          ? TextButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+          ? Container(
+              color: Colors.green.shade600,
+              width: double.infinity,
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 100, right: 100),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  primary: Colors.black,
+                  backgroundColor: Colors.red.shade800,
+                  maximumSize: const Size.fromHeight(80),
                 ),
-                primary: Colors.white70,
-                backgroundColor: Colors.teal.shade800,
-                maximumSize: const Size.fromHeight(80),
+                onPressed: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.setBool("showHome", true);
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const WokaHomePage()));
+                },
+                child: const Text(
+                  "Get Started",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 22,
+                  ),
+                ),
               ),
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                prefs.setBool("showHome", true);
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const WokaHomePage()));
-              },
-              child: const Text("Get Started"))
+            )
           : Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               height: 80,
@@ -83,7 +100,14 @@ class _WokaPageState extends State<OnboardingPages> {
                     onPressed: () {
                       pageViewController.jumpToPage(2);
                     },
-                    child: const Text("Skip"),
+                    child: const Text(
+                      "SKIP",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.black,
+                          fontSize: 22),
+                    ),
                   ),
                   Center(
                     child: SmoothPageIndicator(
@@ -105,7 +129,14 @@ class _WokaPageState extends State<OnboardingPages> {
                           duration: const Duration(microseconds: 500),
                           curve: Curves.easeInOut);
                     },
-                    child: const Text("Next"),
+                    child: const Text(
+                      "NEXT",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.black,
+                          fontSize: 22),
+                    ),
                   ),
                 ],
               ),
